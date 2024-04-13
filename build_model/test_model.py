@@ -94,7 +94,7 @@ def main():
                 else:
                     stat_result_type(dict_addr_to_weight, set_obj_addr, target_obj_type, dict_key_node_to_weight, threshold=obj_type_threshold)
         elif TEST_FROM == 'mutate':
-            mutate_list = [x for x in os.listdir(GRAPH_TRAIN_PATH) if 'graph.' in x and '.graph.' not in x and 'mutant' not in x and '.tag' not in x and '.all' in x and '.mutate' in x]
+            mutate_list = [x for x in os.listdir(MUTATE_GRAPH_PATH) if 'graph.' in x and '.graph.' not in x and 'mutant' not in x and '.tag' not in x and '.all' in x and '.mutate' in x]
             list_file_test = [MUTATE_GRAPH_PATH + x for x in mutate_list]
             print(list_file_test)
             log(list_file_test)
