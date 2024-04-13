@@ -7,7 +7,7 @@ python3 mutate.py <input_graph_file> <output_file> -o <object_type> -s <#bytes>
 ```
 Example:
 ```
-python3 mutate.py create_memory_graphs/graph/graph.win7_0._EPROCESS create_memory_graphs/graph/graph.win7_0._EPROCESS.mutate -o EPROCESS -s 50
+python3 mutate.py create_memory_graphs/graph/graph.win7_0._EPROCESS create_memory_graphs/graph/graph.win7_0._EPROCESS.mutate.50 -o _EPROCESS -s 50
 ```
 
 

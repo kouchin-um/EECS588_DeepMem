@@ -3,7 +3,8 @@ from train_model import *
 OUTPUT_PATH = '../create_memory_graphs/graph/'
 MUTATE_DUMP_PATH = '../memory_dumps_mutate/'
 DUMP_PATH = '../memory_dumps/'
-TEST_FROM = 'graph'  # [graph/dump/mutate_diff/mutate_pooltag/mutate_link]
+TEST_FROM = 'mutate'  # [graph/dump/mutate_diff/mutate_pooltag/mutate_link]
+MUTATE_GRAPH_PATH = '../create_memory_graphs/graph/'
 OBJ_TPE_THRESHOLD_PATH = './obj_type_threshold.dat'
 ROC = False
 
@@ -79,6 +80,23 @@ def main():
         y = tf.nn.dropout(tf.matmul(tf.matmul(tf.matmul(mu, W_2), W_3), W_4), keep_prob)
         if TEST_FROM == 'graph':
             _, _, list_file_test = get_file_list(target_obj_type)
+            log(list_file_test)
+            for file_graph in list_file_test:
+                log(file_graph)
+                list_vector, list_label, ln_matrix, rn_matrix, lp_matrix, rp_matrix, dict_idx_to_addr, set_obj_addr = read_dataset(file_graph, output_vector_size, dict_key_node_to_weight, target_obj_type)
+                log('Test using ' + file_graph)
+                ye = sess.run(y, feed_dict={x:list_vector, ln:ln_matrix, rn:rn_matrix, lp:lp_matrix, rp:rp_matrix, keep_prob:1})
+                log('get_addr_to_weight')
+                dict_addr_to_weight = get_addr_to_weight(ye, dict_idx_to_addr, dict_key_node_to_weight)
+                log('stat_result_type')
+                if ROC == True:
+                    stat_result_type(dict_addr_to_weight, set_obj_addr, target_obj_type, dict_key_node_to_weight, threshold=0)
+                else:
+                    stat_result_type(dict_addr_to_weight, set_obj_addr, target_obj_type, dict_key_node_to_weight, threshold=obj_type_threshold)
+        elif TEST_FROM == 'mutate':
+            mutate_list = [x for x in os.listdir(GRAPH_TRAIN_PATH) if 'graph.' in x and '.graph.' not in x and 'mutant' not in x and '.tag' not in x and '.all' in x and '.mutate' in x]
+            list_file_test = [MUTATE_GRAPH_PATH + x for x in mutate_list]
+            print(list_file_test)
             log(list_file_test)
             for file_graph in list_file_test:
                 log(file_graph)

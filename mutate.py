@@ -19,8 +19,8 @@ def arg_parser() -> argparse.ArgumentParser:
             help="The output file name")
 
     parser.add_argument("-o", "--object", 
-            type=str, required=True, choices=["EPROCESS", "ETHREAD"],
-            help="The type of the object to be mutated [EPROCESS/ETHREAD]")
+            type=str, required=True, choices=["_EPROCESS", "_ETHREAD"],
+            help="The type of the object to be mutated [_EPROCESS/_ETHREAD]")
     
     parser.add_argument("-s", "--size", 
             type=int, required=True,
