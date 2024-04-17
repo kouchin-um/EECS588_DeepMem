@@ -6,6 +6,8 @@ import argparse
 import random
 import os
 
+change_pointer = False
+
 def arg_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(
             description="Input arguments")
@@ -52,9 +54,12 @@ def mutate_line(line: str, size: int) -> str:
 
     # data[1:4]
     for i in range(1,5):
-        if data[i] != '':
-            index = index + 4 * (data[i].count(',') + 1)
-        data_start.append(index)
+        if change_pointer:
+            if data[i] != '':
+                index = index + 4 * (data[i].count(',') + 1)
+            data_start.append(index)
+        else:
+            data_start.append(0)
 
     # data[6] (but the size is given by data[5])
     index = index + int(data[5])
